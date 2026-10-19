@@ -29,3 +29,10 @@ dist-ssr
 !.dev.vars.example
 .env*
 !.env.example
+
+# Personal ComfyUI export: only the sanitized server workflow is checked in
+/blocky-minecraft-api.json
+
+# Private local GPU runner state
+.blocky/
+!.env.runner.example
