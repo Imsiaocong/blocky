@@ -1,4 +1,4 @@
-﻿# Blocky
+# Blocky
 
 React + TypeScript + Vite + Cloudflare Workers 头像站。Worker 名称保持 `blocky`，沿用 GitHub / Cloudflare 自动部署。
 
@@ -6,7 +6,7 @@ React + TypeScript + Vite + Cloudflare Workers 头像站。Worker 名称保持 `
 
 ## 网站与本地 GPU
 
-网站：https://blocky.wd1998313.workers.dev
+网站：https://blocky.zeeyatech.com
 
 浏览器通过同源 Worker 接口提交图片；电脑主动建立经过密钥认证的 WebSocket，调用本机 ComfyUI。无需开放路由器端口，无需 R2，无需公开 ComfyUI。
 

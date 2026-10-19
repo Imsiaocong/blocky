@@ -78,7 +78,7 @@ function connect() {
   if (stopping) return
   const endpoint = new URL('/api/runner/connect', site)
   endpoint.protocol = site.protocol === 'https:' ? 'wss:' : 'ws:'
-  socket = new WebSocket(endpoint, { headers: { Authorization: `Bearer ${token}` }, maxPayload: 400000, handshakeTimeout: 15000 })
+  socket = new WebSocket(endpoint, { headers: { Authorization: `Bearer ${token}`, 'User-Agent': 'Blocky-GPU-Runner/1.0' }, rejectUnauthorized: true, maxPayload: 400000, handshakeTimeout: 15000 })
   socket.on('open', () => { connectedAt = Date.now(); retry = 1000; console.log(new Date().toISOString(), 'Connected to Blocky.'); void tick() })
   socket.on('message', (raw) => {
     try {
@@ -97,7 +97,8 @@ function connect() {
       }
     } catch { socket?.close(1008, 'Invalid packet') }
   })
-  socket.on('error', () => { /* The close handler reconnects; never log request headers. */ })
+  socket.on('unexpected-response', (_, response) => { console.warn('Runner handshake rejected:', response.statusCode); response.resume(); socket?.terminate() })
+  socket.on('error', (error) => { console.warn('Runner network error:', 'code' in error ? error.code : 'handshake failed') })
   socket.on('close', (code) => {
     requests.clear()
     // A replacement runner owns this connection now. Do not fight it in a reconnect loop.
