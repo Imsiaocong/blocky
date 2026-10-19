@@ -102,7 +102,7 @@ function connect() {
   socket.on('close', (code) => {
     requests.clear()
     // A replacement runner owns this connection now. Do not fight it in a reconnect loop.
-    if (code === 1012) { console.log('Replaced by another runner. Exiting.'); stop(); return }
+    if (code === 4001) { console.log('Replaced by another runner. Exiting.'); stop(); return }
     if (!stopping) { console.log(new Date().toISOString(), 'Disconnected. Reconnecting…'); setTimeout(connect, retry); retry = Math.min(retry * 2, 30000) }
   })
 }

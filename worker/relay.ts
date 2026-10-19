@@ -122,7 +122,7 @@ export class GenerationRelay extends DurableObject<Env> {
     const url = new URL(request.url)
     const owner = request.headers.get('x-blocky-owner') ?? ''
     if (url.pathname === '/api/runner/connect' && request.headers.get('upgrade')?.toLowerCase() === 'websocket') {
-      for (const old of this.ctx.getWebSockets('gpu')) old.close(1012, 'Runner reconnected')
+      for (const old of this.ctx.getWebSockets('gpu')) old.close(4001, 'Runner reconnected')
       const pair = new WebSocketPair()
       this.ctx.acceptWebSocket(pair[1], ['gpu'])
       return new Response(null, { status: 101, webSocket: pair[0] })
